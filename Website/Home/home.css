@@ -1,0 +1,127 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    color: #005350;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #005350;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #005350;
+    font-size: 16px;
+    padding: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    border-radius: 5px;
+}
+
+nav ul li a:hover {
+    background-color: #146c43; /* Slightly darker background */
+    color: white;
+    transform: translateY(-3px) scale(1.05); /* Uplifting effect */
+    box-shadow: 0px 5px 15px rgba(0, 83, 80, 0.3); /* Shadow effect */
+}
+
+main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;  
+    flex: 1;
+}
+
+.content {
+    max-width: 50%;
+}
+
+.content h1 {
+    font-size: 36px;
+    color: #005350;
+    margin-bottom: 10px;
+}
+
+.content p {
+    font-size: 18px;
+    color: #005350;
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    font-size: 16px;
+}
+
+.search-bar button {
+    background: #005350;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.check-ckd-btn {
+    background-color: #1a4d2e; /* Default button color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.check-ckd-btn:hover {
+    background-color: #146c43; /* Darker shade on hover */
+    transform: scale(1.05); /* Slightly enlarges the button */
+}
+
+.image-container img {
+    width:800px;
+    border-radius: 10px;
+    transition: transform 0.5s ease-in-out;
+}
+
+.image-container img:hover {
+    transform: scale(1.05);
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background: #005350;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

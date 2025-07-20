@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CKD Lab Results</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    <header>
+        <div class="logo">CKD</div>
+        <nav>
+            <ul>
+                <li><a href="../Home/home.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="doctors.html">Doctors</a></li>
+                <li><a href="settings.html">Settings</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="form-container">
+        <h2>Enter Lab Results</h2>
+        <p>Provide your lab test values for an accurate CKD risk assessment.</p>
+        
+        <form action="submit_results.php" method="POST">
+            <label for="creatinine">Serum Creatinine (mg/dL):</label>
+            <input type="number" step="0.01" id="creatinine" name="creatinine" required>
+
+            <label for="egfr">eGFR (mL/min/1.73m²):</label>
+            <input type="number" id="egfr" name="egfr" required>
+
+            <label for="protein">Protein in Urine (mg/dL):</label>
+            <input type="number" id="protein" name="protein" required>
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 CKD Prediction. All Rights Reserved.</p>
+    </footer>
+    <script src="form.js"></script>
+</body>
+</html>
