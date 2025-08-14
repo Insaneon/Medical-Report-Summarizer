@@ -41,6 +41,21 @@
             <img src="../ckd-image.jpg" alt="Medical Consultation">
         </div>
     </main>
+    
+    <div id="loading" style="display: none;" class="text-center mb-3">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Processing...</span>
+        </div>
+        <p>Processing medical report...</p>
+    </div>
+
+    
+    <div class="text-center mb-3" id="download-section" style="display: none;">
+        <button class="btn btn-secondary" onclick="downloadSummary()">
+            📄 Download Summary
+        </button>
+    </div>
+
 
     <footer>
         <p>&copy; 2025 CKD Prediction. All Rights Reserved.</p>
