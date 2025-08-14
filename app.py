@@ -4,16 +4,14 @@ import json
 import traceback
 from models.summarizer import MedicalReportSummarizer
 
-app = Flask(__name__)
-CORS(app)  # Enable CORS for API calls
-
 # Initialize the medical summarizer
 summarizer = MedicalReportSummarizer()
 
+app = Flask(__name__, static_folder='web', static_url_path='')
+
 @app.route('/')
-def home():
-    """Render the main page"""
-    return render_template('home.html')
+def index():
+    return send_from_directory('web', 'index.html')
 
 @app.route('/api/summarize', methods=['POST'])
 def summarize_report():
