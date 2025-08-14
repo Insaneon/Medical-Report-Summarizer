@@ -42,3 +42,19 @@ Machine Learning Models
 • facebook/bart-large-cnn - Text summarization
 
 • en_core_web_sm - spaCy English language mode
+
+<h3>🔧 Quick Setup</h3>
+
+Prerequisites: Python 3.7 or higher, pip package manager
+
+```
+bash
+git clone https://github.com/Insaneon01/Medical-Report-Summarizer.git
+cd Medical-Report-Summarizer
+
+
+```
+
+
+
+
