@@ -2,63 +2,53 @@
 A web-based application that automatically processes and summarizes medical reports using advanced Natural Language Processing (NLP) techniques, Named Entity Recognition (NER), and transformer models.
 <h3>Overview</h3>
 This application extracts key medical information from unstructured medical reports and presents it in a structured, easy-to-read format. It leverages machine learning models to identify patient information, diagnoses, medications, vital signs, and critical flags from medical text.
-<h3>Features</h3>
 
-• Smart Medical Text Processing: Uses spaCy NER and transformer models for accurate information extraction.
+✨ Features
+Smart Medical Text Processing: Uses spaCy NER and transformer models for accurate information extraction
 
-• Comprehensive Data Extraction.
+Comprehensive Data Extraction:
 
-• Web-based Interface: Clean, responsive UI for easy report input and result viewing
+Patient demographics (name, age, gender, MRN)
 
-• Real-time Processing: Instant summarization with loading indicators
+Chief complaints and presenting problems
+
+Primary and secondary diagnoses
+
+Current medications with dosages
+
+Vital signs and laboratory results
+
+Critical flags and urgent findings
+
+Web-based Interface: Clean, responsive UI for easy report input and result viewing
+
+Real-time Processing: Instant summarization with loading indicators
 
 • Export Functionality: Download summaries for record-keeping
 
+Medical Validation: Built-in validation for medical entities and ICD-10 codes
 
+🛠 Technology Stack
+Backend
+Python 3.7+
 
-<h3>Quick Setup</h3>
+Flask - Web framework
 
-Prerequisites: Python 3.7 or higher, pip package manager
+spaCy - Named Entity Recognition and NLP
 
-Clone the repo
----------------
+Transformers (Hugging Face) - BART model for text summarization
 
-```
-git clone https://github.com/Insaneon01/Medical-Report-Summarizer.git
-cd Medical-Report-Summarizer
-```
+Flask-CORS - Cross-origin resource sharing
 
-Install Python Dependencies
-----------------------------
+Frontend
+HTML5 - Structure and markup
 
-```
-pip install flask flask-cors transformers torch spacy dataclasses-json
-```
+CSS3 - Modern responsive styling
 
-Download spaCy Language Model
-------------------------------
+JavaScript (ES6+) - Interactive functionality and API integration
 
-```
-python -m spacy download en_core_web_sm
-```
+Machine Learning Models
+facebook/bart-large-cnn - Text summarization
 
-Resources for better execution time(optional)
-----------------------------------------------
+en_core_web_sm - spaCy English language model
 
-```
-# For GPU support (optional)
-pip install torch torchvision torchaudio
-
-# For better performance
-pip install accelerate
-```
-
-Run the application
---------------------
-
-```
-python app.py
-```
-
-
-<h3>Keep Going 👍</h3>
