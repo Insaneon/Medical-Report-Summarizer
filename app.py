@@ -1,13 +1,17 @@
+import os
+# Disable oneDNN optimizations for consistent results
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+
 from flask import Flask, render_template, request, jsonify, send_from_directory
 from flask_cors import CORS
 import json
 import traceback
 from models.summarizer import MedicalReportSummarizer
 
-# Initialize the medical summarizer
-summarizer = MedicalReportSummarizer()
-
 app = Flask(__name__, static_folder='web', static_url_path='')
+CORS(app)
+
+summarizer = MedicalReportSummarizer()
 
 @app.route('/')
 def index():

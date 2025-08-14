@@ -3,66 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CKD Prediction</title>
+    <title>Medical Report Summarizer</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <div class="logo">CKD</div>
+        <div class="logo">MedSummarizer</div>
         <nav>
             <ul>
-                <li><a href="#" class="settings-btn">Settings</a></li>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <div class="content">
-            <h1>Accurate and Early Prediction of CKD</h1>
-            <p>
-                Our AI-driven CKD prediction system helps individuals and healthcare professionals
-                assess kidney disease risks early, allowing timely intervention and better health management.
-                <br><br>
-                <strong>Key Features:</strong>
-                <ul>
-                    <li>✔️ AI-powered risk assessment</li>
-                    <li>✔️ Personalized health recommendations</li>
-                    <li>✔️ Fast and accurate results</li>
-                    <li>✔️ Secure and confidential testing</li>
-                </ul>
-            </p>
-            <div class="search-bar">
-                <a href="../Input/check.html">
-                    <button class="check-ckd-btn">Summarize Report</button>
-                </a>
+            <h1>Medical Report Summarizer</h1>
+            <p>Transform lengthy medical reports into concise, structured summaries for healthcare professionals</p>
+            
+            <!-- Medical Report Input Section -->
+            <div class="report-input-section">
+                <div class="input-container">
+                    <textarea 
+                        id="medicalReport" 
+                        placeholder="Paste your medical report here..."
+                        rows="10"
+                    ></textarea>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="check-ckd-btn" onclick="summarizeReport()">
+                        📋 Summarize Report
+                    </button>
+                    <button class="clear-btn" onclick="clearInput()">
+                        🗑️ Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loading" class="loading-container" style="display: none;">
+                <div class="spinner"></div>
+                <p>Processing medical report...</p>
             </div>
         </div>
+
         <div class="image-container">
-            <img src="../ckd-image.jpg" alt="Medical Consultation">
+            <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Medical Professional">
         </div>
     </main>
-    
-    <div id="loading" style="display: none;" class="text-center mb-3">
-        <div class="spinner-border" role="status">
-            <span class="sr-only">Processing...</span>
+
+    <!-- Results Section -->
+    <section id="results-section" class="results-container" style="display: none;">
+        <div class="results-header">
+            <h2>📋 Medical Report Summary</h2>
+            <div class="results-actions">
+                <button class="download-btn" onclick="downloadSummary()">📄 Download</button>
+                <button class="new-report-btn" onclick="newReport()">➕ New Report</button>
+            </div>
         </div>
-        <p>Processing medical report...</p>
-    </div>
-
-    
-    <div class="text-center mb-3" id="download-section" style="display: none;">
-        <button class="btn btn-secondary" onclick="downloadSummary()">
-            📄 Download Summary
-        </button>
-    </div>
-
+        <div id="result" class="summary-results"></div>
+    </section>
 
     <footer>
-        <p>&copy; 2025 CKD Prediction. All Rights Reserved.</p>
+        <p>&copy; 2024 Medical Report Summarizer. All rights reserved.</p>
     </footer>
+
     <script src="app.js"></script>
 </body>
-
-</html>
-</html>
 </html>

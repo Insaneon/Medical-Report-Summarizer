@@ -46,6 +46,29 @@ class MedicalReportSummarizer:
             print("Warning: Summarization model not available")
             self.summarizer = None
     
+    def validate_medical_entity(self, text: str) -> bool:
+        """Validate if text represents a medical condition"""
+        
+        # ICD-10 pattern matching
+        if re.match(r'^[A-Z]\d{2}', text):  # ICD-10 codes start with letter+digits
+            return True
+        
+        # Common medical suffixes
+        medical_suffixes = ['-emia', '-itis', '-osis', '-pathy', '-syndrome', '-disease']
+        if any(text.lower().endswith(suffix) for suffix in medical_suffixes):
+            return True
+        
+        # Common medical conditions
+        medical_conditions = [
+            'diabetes', 'hypertension', 'pneumonia', 'coronary', 'acute',
+            'chronic', 'syndrome', 'failure', 'disease', 'disorder'
+        ]
+        if any(condition in text.lower() for condition in medical_conditions):
+            return True
+            
+        return False
+
+
     def extract_patient_info(self, text: str) -> PatientInfo:
         """Extract basic patient information"""
         patient = PatientInfo()
@@ -93,25 +116,76 @@ class MedicalReportSummarizer:
         return ""
     
     def extract_diagnoses(self, text: str) -> List[str]:
-        """Extract diagnoses and ICD codes"""
+        """Extract diagnoses with improved accuracy"""
         diagnoses = []
         
+        # Multiple pattern approaches
         patterns = [
-            r"Diagnosis[:\s]+(.*?)(?:\n\n|Plan|Medications)",
-            r"Impression[:\s]+(.*?)(?:\n\n|Plan|Medications)",
-            r"Assessment[:\s]+(.*?)(?:\n\n|Plan|Medications)"
+            r"(?:Primary\s+)?Diagnosis[es]*[:\s]+(.*?)(?:\n\n|Plan|Medications|Treatment)",
+            r"(?:Final\s+)?Impression[:\s]+(.*?)(?:\n\n|Plan|Recommendations)",  
+            r"Assessment[:\s]+(.*?)(?:\n\n|Plan|Treatment)",
+            r"ICD[:\s]*(?:10|9)[:\s]+(.*?)(?:\n\n|Plan)"
         ]
         
         for pattern in patterns:
             match = re.search(pattern, text, re.IGNORECASE | re.DOTALL)
             if match:
-                diag_text = match.group(1)
-                # Split by numbers or bullet points
-                diag_items = re.split(r'\n\s*\d+\.|\n\s*[-•]', diag_text)
-                diagnoses.extend([d.strip() for d in diag_items if d.strip()])
+                diag_text = match.group(1).strip()
+                
+                # Clean and filter diagnoses
+                cleaned_diagnoses = self.clean_diagnosis_text(diag_text)
+                diagnoses.extend(cleaned_diagnoses)
                 break
         
         return diagnoses[:10]  # Limit to top 10
+
+    def clean_diagnosis_text(self, text: str) -> List[str]:
+        """Clean and filter diagnosis text to remove non-diagnoses"""
+        
+        # Split by common delimiters
+        items = re.split(r'\n\s*\d+\.|\n\s*[-•]|\n(?=\d+\.)', text)
+        
+        diagnoses = []
+        
+        # Words to exclude (not actual diagnoses)
+        exclude_words = [
+            'adjustment', 'management', 'follow-up', 'monitoring', 'continued',
+            'stable', 'controlled', 'improved', 'resolved', 'plan', 'care',
+            'treatment', 'therapy', 'medication', 'drug', 'well-controlled'
+        ]
+        
+        # Medical condition indicators (actual diagnoses)
+        medical_indicators = [
+            'syndrome', 'disease', 'disorder', 'condition', 'emia', 'itis', 
+            'osis', 'pathy', 'cancer', 'tumor', 'failure', 'infarction',
+            'pneumonia', 'diabetes', 'hypertension', 'coronary', 'acute'
+        ]
+        
+        for item in items:
+            item = item.strip()
+            if not item or len(item) < 5:
+                continue
+                
+            # Remove numbering and bullets
+            item = re.sub(r'^\d+\.\s*', '', item)
+            item = re.sub(r'^[-•]\s*', '', item)
+            
+            # Skip if it's just an action/management phrase
+            item_lower = item.lower()
+            if any(exclude in item_lower for exclude in exclude_words):
+                # Check if it also contains medical terms
+                if not any(med in item_lower for med in medical_indicators):
+                    continue
+            
+            # Extract the actual diagnosis part (before any management notes)
+            diagnosis_part = re.split(r'[-–]\s*(?:stable|controlled|improved|management|adjustment)', item)[0]
+            diagnosis_part = diagnosis_part.strip()
+            
+            if diagnosis_part and len(diagnosis_part) > 3:
+                diagnoses.append(diagnosis_part)
+        
+        return diagnoses
+
     
     def extract_medications(self, text: str) -> List[str]:
         """Extract current medications"""
@@ -331,70 +405,6 @@ class MedicalReportSummarizer:
 
 # Usage Example and Testing
 def main():
-    # Sample medical report for testing
-    sample_report = """
-    Patient: John Smith
-    Age: 45
-    Gender: Male
-    MRN: MR123456
-    
-    Chief Complaint: Chest pain and shortness of breath for 2 days
-    
-    History of Present Illness: 
-    45-year-old male presents with acute onset chest pain and dyspnea. 
-    Pain is substernal, 7/10 severity, radiating to left arm.
-    
-    Vital Signs:
-    BP: 150/95
-    HR: 110
-    Temp: 98.6
-    RR: 24
-    O2 Sat: 92%
-    
-    Assessment and Plan:
-    1. Acute coronary syndrome - Rule out myocardial infarction
-    2. Hypertension - poorly controlled
-    3. Dyslipidemia
-    
-    Medications:
-    1. Aspirin 81mg daily
-    2. Metoprolol 50mg twice daily
-    3. Atorvastatin 40mg daily
-    4. Lisinopril 10mg daily
-    
-    Laboratory Results:
-    Hemoglobin: 12.5
-    WBC: 8.2
-    Glucose: 145
-    Creatinine: 1.2
-    """
-    
-    # Initialize summarizer
-    summarizer = MedicalReportSummarizer()
-    
-    # Generate summary
-    summary = summarizer.summarize_report(sample_report)
-    
-    # Display formatted summary
-    formatted_summary = summarizer.format_summary(summary)
-    print(formatted_summary)
-    
-    # Export as JSON
-    summary_dict = {
-        'patient_info': summary.patient_info.__dict__,
-        'chief_complaint': summary.chief_complaint,
-        'diagnoses': summary.diagnosis,
-        'medications': summary.medications,
-        'vital_signs': summary.vital_signs,
-        'lab_results': summary.lab_results,
-        'critical_flags': summary.critical_flags,
-        'timestamp': datetime.now().isoformat()
-    }
-    
-    with open('medical_summary.json', 'w') as f:
-        json.dump(summary_dict, f, indent=2)
-    
-    print("\n✅ Summary exported to medical_summary.json")
-
+    pass
 if __name__ == "__main__":
     main()
