@@ -21,7 +21,7 @@ header {
 .logo {
     font-size: 24px;
     font-weight: bold;
-    color: #005350;
+    color: #003533;
 }
 
 nav ul {
@@ -37,7 +37,7 @@ nav ul li {
 
 nav ul li a {
     text-decoration: none;
-    color: #005350;
+    color: #003533;
     font-size: 16px;
     padding: 10px;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
@@ -45,7 +45,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background-color: #146c43;
+    background-color: #003533;
     color: white;
     transform: translateY(-3px) scale(1.05);
     box-shadow: 0px 5px 15px rgba(0, 83, 80, 0.3);
@@ -67,13 +67,13 @@ main {
 
 .content h1 {
     font-size: 36px;
-    color: #005350;
+    color: #003533;
     margin-bottom: 10px;
 }
 
 .content p {
     font-size: 18px;
-    color: #005350;
+    color: #003533;
     margin-bottom: 20px;
 }
 
@@ -89,7 +89,7 @@ main {
 #medicalReport {
     width: 100%;
     padding: 15px;
-    border: 2px solid #005350;
+    border: 2px solid #003533;
     border-radius: 8px;
     font-size: 14px;
     font-family: monospace;
@@ -111,7 +111,7 @@ main {
 }
 
 .check-ckd-btn {
-    background-color: #005350;
+    background-color: #003533;
     color: white;
     border: none;
     padding: 12px 24px;
@@ -122,7 +122,7 @@ main {
 }
 
 .check-ckd-btn:hover {
-    background-color: #146c43;
+    background-color: #064f4b;
     transform: scale(1.05);
 }
 
@@ -138,7 +138,7 @@ main {
 }
 
 .clear-btn:hover {
-    background-color: #c82333;
+    background-color: #d42739;
     transform: scale(1.05);
 }
 
@@ -151,7 +151,7 @@ main {
 
 .spinner {
     border: 4px solid #f3f3f3;
-    border-top: 4px solid #005350;
+    border-top: 4px solid #003533;
     border-radius: 50%;
     width: 30px;
     height: 30px;
@@ -195,7 +195,7 @@ main {
 }
 
 .results-header h2 {
-    color: #005350;
+    color: #003533;
     margin: 0;
 }
 
@@ -205,7 +205,7 @@ main {
 }
 
 .download-btn, .new-report-btn {
-    background-color: #005350;
+    background-color: #003533;
     color: white;
     border: none;
     padding: 10px 16px;
@@ -216,7 +216,7 @@ main {
 }
 
 .download-btn:hover, .new-report-btn:hover {
-    background-color: #146c43;
+    background-color: #002422;
 }
 
 /* Summary Cards */
@@ -240,7 +240,7 @@ main {
 }
 
 .card-header {
-    background-color: #005350;
+    background-color: #003533;
     color: white;
     padding: 12px 16px;
     font-weight: bold;
@@ -314,9 +314,106 @@ main {
 footer {
     text-align: center;
     padding: 20px;
-    background: #005350;
+    background: #003533;
     color: white;
     margin-top: auto;
+}
+
+/* About Section Styles */
+.about-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.about-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.about-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;  /* Add smooth transition */
+}
+
+.about-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(to bottom right, #ffffff, #f8f9fa);
+}
+
+.about-card h3 {
+    color: #003533;  /* Match the primary blue color theme */
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;  /* Add smooth color transition */
+}
+
+.about-card:hover h3 {
+    color: #002422;  /* Slightly darker shade on hover */
+}
+
+.about-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.about-card ul li {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.about-card ul li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #003533;
+}
+
+/* Update primary colors */
+:root {
+    --primary-color: #003533;
+    --primary-dark: #002422;
+    --primary-light: #004644;
+}
+
+/* Update any existing blue colors to green */
+.about-card h3 {
+    color: var(--primary-color);
+}
+
+.about-card:hover h3 {
+    color: var(--primary-dark);
+}
+
+.about-card ul li:before {
+    color: var(--primary-color);
+}
+
+/* Update other elements that might use blue */
+a {
+    color: var(--primary-color);
+}
+
+a:hover {
+    color: var(--primary-dark);
+}
+
+.check-ckd-btn, 
+.download-btn, 
+.new-report-btn {
+    background-color: var(--primary-color);
+}
+
+.check-ckd-btn:hover, 
+.download-btn:hover, 
+.new-report-btn:hover {
+    background-color: var(--primary-dark);
 }
 
 /* Responsive Design */
